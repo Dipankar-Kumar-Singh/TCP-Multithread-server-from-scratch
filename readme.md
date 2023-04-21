@@ -70,7 +70,7 @@ Request B --> Fired at t : 25
 Recived Response at Delta of 8 Second. 
 Recived Response 
 Response A <===  t : 33 
-Response A <===  t : 41 
+Response B <===  t : 41 
 ```
 
 I thought that It would Respond at same time, because both curl was fired at **t : 25**
