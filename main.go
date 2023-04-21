@@ -24,15 +24,21 @@ func do(conn net.Conn) {
 	fmt.Println("No of bytes read : " , noOfBytesRead);
 
 
-	string message = "Hello from server" ;
+	// message := "Hello from server" 
 	// conn.Write([]byte("Hello from server"))
-	 // write to the connection( But it will not send the data to the client until the buffer is full or the connection is closed)
-	 // and for curl request , it is not good , as curl is waiting for an HTTP response
+	// write to the connection( But it will not send the data to the client until the buffer is full or the connection is closed)
+	// and for curl request , it is not good , as curl is waiting for an HTTP response
 
-	 // Making the same message as a HTTP response
-	 conn.Write([]byte("HTTP/1.1 200 OK\r\n\rHello, World!\r\n"))
+	// Making the same message as a HTTP response
+	// conn.Write([]byte("HTTP/1.1 200 OK\r\n\rHello, World!\r\n"))
+	conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\nHello, World!\r\n"))
+	// HTTP/1.1 200 OK\r\n\r\n --> HTTP response header
+	// Hello, World!\r\n --> HTTP response body
+	// HTTP response header is terminated by \r\n\r\n
+	// HTTP response body is terminated by \r\n
 
 
+	conn.Close() // close the connection
 
 }
 
@@ -44,9 +50,13 @@ func main() {
 
 	// accept connection on port --> A blocking system call 
 	conn , err := listener.Accept() ;
+	// listener.Accepts what does it do ?
+	// It will wait until a client connects to the server
+	// It will return a connection object
 	if(err != nil){
 		log.Fatal(err) 
 	}
-
-	fmt.Println(conn)
+	
+	// fmt.Println(conn)
+	do(conn) ;
 };
