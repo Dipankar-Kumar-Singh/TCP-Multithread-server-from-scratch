@@ -76,4 +76,23 @@ Response B <===  t : 41
 I thought that It would Respond at same time, because both curl was fired at **t : 25**
 But **Go** don't processed it synchronously.
 
+### This Server can only handle one request at a Time : (  🥲
+#### It cannot handle concurrent Request.
+
+##### What to do 
+## Solution :  Multithreading 
+
+   ```Go
+	for {
+	        conn, err := listener.Accept()
+	        if err != nil {
+	            log.Fatal(err)
+	        }
+	        // go is dispatching this fun call to as a thread 
+	        // yes it is as easy as that : ) ... 
+	        // 😁 Thanks to People who build go this easy : ) 
+	        go processConnection(conn)
+	    }
+```
+
 
