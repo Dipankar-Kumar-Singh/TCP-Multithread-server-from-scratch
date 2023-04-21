@@ -56,4 +56,24 @@ curl http://localhost:8080
 
 ![Behavior on Multiple request -processing one another_Synchronous](https://user-images.githubusercontent.com/66475186/233722548-bd52a92c-7fc2-45cf-aea8-5824d4ca7f3d.png)
 
+*So what is happning ?* 🤔💭 
+In the Proceess function : I added some dealy ( 8 second Delay )
+```Go
+	time.Sleep(8 * time.Second) // sleep for 8 second ( Before Writing to Buffer)
+```
+
+As you can see ... 
+```
+Request A --> Fired at t : 25 
+Request B --> Fired at t : 25 
+
+Recived Response at Delta of 8 Second. 
+Recived Response 
+Response A <===  t : 33 
+Response A <===  t : 41 
+```
+
+I thought that It would Respond at same time, because both curl was fired at **t : 25**
+But **Go** don't processed it synchronously.
+
 
