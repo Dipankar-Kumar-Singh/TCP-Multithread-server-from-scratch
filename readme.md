@@ -50,3 +50,10 @@ curl http://localhost:8080
 // data can be send and recived via this connection 
 // and it will be Listened by our TCP Listener on port 8080
 ```
+
+# What happens when multiple curl request are made at once ?
+##### Yes I am talking about Multithreading 🧵🤹‍♂️  🙂 . 
+
+![Behavior on Multiple request -processing one another_Synchronous](https://user-images.githubusercontent.com/66475186/233722548-bd52a92c-7fc2-45cf-aea8-5824d4ca7f3d.png)
+
+
