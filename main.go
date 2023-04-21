@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 	"time"
-);
+)
 
 func do(conn net.Conn) {
 	fmt.Println(conn)
@@ -13,7 +13,7 @@ func do(conn net.Conn) {
 
 	buf := make([]byte, 1024) // 1kb buffer ( byte array )
 
-	noOfBytesRead , err := conn.Read(buf) // read from the connection
+	noOfBytesRead, err := conn.Read(buf) // read from the connection
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -21,10 +21,9 @@ func do(conn net.Conn) {
 
 	time.Sleep(1 * time.Second) // sleep for 1 second
 
-	fmt.Println("No of bytes read : " , noOfBytesRead);
+	fmt.Println("No of bytes read : ", noOfBytesRead)
 
-
-	// message := "Hello from server" 
+	// message := "Hello from server"
 	// conn.Write([]byte("Hello from server"))
 	// write to the connection( But it will not send the data to the client until the buffer is full or the connection is closed)
 	// and for curl request , it is not good , as curl is waiting for an HTTP response
@@ -37,26 +36,29 @@ func do(conn net.Conn) {
 	// HTTP response header is terminated by \r\n\r\n
 	// HTTP response body is terminated by \r\n
 
-
 	conn.Close() // close the connection
 
 }
 
 func main() {
-	listener , err := net.Listen("tcp", ":8080") ;
-	if(err != nil){
-		log.Fatal(err) 
+	listener, err := net.Listen("tcp", ":8080")
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	// accept connection on port --> A blocking system call 
-	conn , err := listener.Accept() ;
-	// listener.Accepts what does it do ?
-	// It will wait until a client connects to the server
-	// It will return a connection object
-	if(err != nil){
-		log.Fatal(err) 
+	// acting as a sever due to continuous listening on port 8080 for incoming connections
+	for {
+		// accept connection on port --> A blocking system call
+		conn, err := listener.Accept()
+		// listener.Accepts what does it do ?
+		// It will wait until a client connects to the server
+		// It will return a connection object
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// fmt.Println(conn)
+		do(conn)
 	}
-	
-	// fmt.Println(conn)
-	do(conn) ;
-};
+
+}
