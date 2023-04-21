@@ -57,7 +57,7 @@ curl http://localhost:8080
 ![Behavior on Multiple request -processing one another_Synchronous](https://user-images.githubusercontent.com/66475186/233722548-bd52a92c-7fc2-45cf-aea8-5824d4ca7f3d.png)
 
 *So what is happning ?* 🤔💭 
-In the Proceess function : I added some dealy ( 8 second Delay )
+In the Proceess function : I added some Delay  ( 8 second Delay )
 ```Go
 	time.Sleep(8 * time.Second) // sleep for 8 second ( Before Writing to Buffer)
 ```
