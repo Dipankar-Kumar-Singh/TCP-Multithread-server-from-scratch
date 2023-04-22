@@ -131,6 +131,7 @@ Response A <===  t : 23
 Response B <===  t : 23
 ```
 
+![image](https://user-images.githubusercontent.com/66475186/233763121-041e86a1-33d4-4bbf-a017-e7d827e1ebfb.png)
 
 
 
