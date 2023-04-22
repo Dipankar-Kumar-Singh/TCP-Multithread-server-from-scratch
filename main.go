@@ -12,7 +12,7 @@ func do(conn net.Conn) {
 	// conn -> a connection object
 
 	buf := make([]byte, 1024) // 1kb buffer ( byte array )
-	
+
 	noOfBytesRead, err := conn.Read(buf) // read from the connection
 	if err != nil {
 		log.Fatal(err)
@@ -71,7 +71,7 @@ func main() {
 		}
 
 		// fmt.Println(conn)
-		do(conn)
+		go do(conn)
 	}
 
 }
