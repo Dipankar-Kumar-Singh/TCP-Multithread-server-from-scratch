@@ -119,3 +119,18 @@ Creating a goroutine does not require much memory, only 2kB of stack space. They
 
 Goroutines are easily created and destroyed at runtime, but threads have a large setup and teardown costs;
 
+
+### Result After using go Goroutines ( Handling concurrent request ) : 
+```
+Request A --> Fired at t : 15
+Request B --> Fired at t : 15
+
+Recived Response at Delta of 8 Second.
+Recived Response
+Response A <===  t : 23
+Response B <===  t : 23
+```
+
+
+
+
