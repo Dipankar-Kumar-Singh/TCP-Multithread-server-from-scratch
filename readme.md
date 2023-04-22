@@ -4,30 +4,32 @@ It is a widely used protocol for sending and receiving data over the internet.
 TCP uses **sockets** to establish and maintain connections between devices.
 When a TCP connection is established, each device creates a socket that is associated with that connection. The devices use their sockets to send and receive data over the connection.
 
-#### What I am trying to do  : 
+#### What I am trying to do :
+
 Playing out with Low-Level Handling of TCP Request and Processing it
 Figuring out how does the sever work ? 🤔
-How does a web server keep on running and accepting multiple request  ? 🤔
+How does a web server keep on running and accepting multiple request ? 🤔
 
 Language used : **Go**
 and using **CURL** for sending testing and sending **TCP packets** ( as CURL is used for HTTP) and HTTP uses TCP , so CURL will establish TCP connection with our Listener ( on port 8080 )
 
-In side main function  : 
+In side main function :
+
 ```GO
 listener, err := net.Listen("tcp", ":8080")
-// Listening on port 8080 for any TCP Connection 
+// Listening on port 8080 for any TCP Connection
 
-conn, err := listener.Accept()  // conn : connection object 
+conn, err := listener.Accept()  // conn : connection object
 // listener.Accepts what does it do ?
 // accept connection on port --> A blocking system call
 // It will wait until a client connects to the server
 // It will return a connection object
 // without accpeting , program will not connect with the request sender and exit.
 
-processIt(conn) ; // for doing some oprations // user defined Function 
+processIt(conn) ; // for doing some oprations // user defined Function
 ```
 
-what is net ?  : In Go programming language, the "net" package provides support for various network-related functionality, such as creating TCP/UDP connections, implementing servers, performing DNS lookups, and more.
+what is net ? : In Go programming language, the "net" package provides support for various network-related functionality, such as creating TCP/UDP connections, implementing servers, performing DNS lookups, and more.
 
 ```Go
 // Implementation of processIt() function
@@ -46,53 +48,61 @@ func processIt(conn net.Conn) {
 
 ```Bash
 curl http://localhost:8080
-// A Connection will be made when Connection get Accepted 
-// data can be send and recived via this connection 
+// A Connection will be made when Connection get Accepted
+// data can be send and recived via this connection
 // and it will be Listened by our TCP Listener on port 8080
 ```
 
 # What happens when multiple curl request are made at once ?
-##### Yes I am talking about Multithreading 🧵🤹‍♂️  🙂 . 
+
+##### Yes I am talking about Multithreading 🧵🤹‍♂️ 🙂 .
 
 ![Behavior on Multiple request -processing one another_Synchronous](https://user-images.githubusercontent.com/66475186/233722548-bd52a92c-7fc2-45cf-aea8-5824d4ca7f3d.png)
 
-*So what is happning ?* 🤔💭 
-In the Proceess function : I added some Delay  ( 8 second Delay )
+_So what is happning ?_ 🤔💭
+In the Proceess function : I added some Delay ( 8 second Delay )
+
 ```Go
 	time.Sleep(8 * time.Second) // sleep for 8 second ( Before Writing to Buffer)
 ```
 
-As you can see ... 
-```
-Request A --> Fired at t : 25 
-Request B --> Fired at t : 25 
+As you can see ...
 
-Recived Response at Delta of 8 Second. 
-Recived Response 
-Response A <===  t : 33 
-Response B <===  t : 41 
+```
+Request A --> Fired at t : 25
+Request B --> Fired at t : 25
+
+Recived Response at Delta of 8 Second.
+Recived Response
+Response A <===  t : 33
+Response B <===  t : 41
 ```
 
 I thought that It would Respond at same time, because both curl was fired at **t : 25**
 But **Go** don't processed it synchronously.
 
-### This Server can only handle one request at a Time : (  🥲
-#### It cannot handle concurrent Request.
+### This Server can only handle one request at a Time : ( 🥲
 
-##### What to do 
-## Solution :  Multithreading 
+It cannot handle concurrent Request currently. \
+What to do ??
 
- ```Go
+## Solution : Multithreading using Goroutines
+
+Goroutines : It is a lightweight thread managed by the Go runtime
+Goroutines are not OS threads , they are managed by the Go runtime
+Goroutines are multiplexed to fewer number of OS threads
+
+go routine which will be dispatched to a thread and will be executed in parallel.
+
+```Go
 	for {
 	        conn, err := listener.Accept()
 	        if err != nil {
 	            log.Fatal(err)
 	        }
-	        // go is dispatching this fun call to as a thread 
-	        // yes it is as easy as that : ) ... 
-	        // 😁 Thanks to People who build go this easy : ) 
+	        // go is dispatching this fun call to as a thread
+	        // yes it is as easy as that : ) ...
+	        // 😁 Thanks to People who build go this easy : )
 	        go processConnection(conn)
 	    }
 ```
-
-
