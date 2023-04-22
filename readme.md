@@ -88,11 +88,10 @@ What to do ??
 
 ## Solution : Multithreading using Goroutines
 
-Goroutines : It is a lightweight thread managed by the Go runtime
+ : It is a lightweight thread managed by the Go runtime
 Goroutines are not OS threads , they are managed by the Go runtime
 Goroutines are multiplexed to fewer number of OS threads
 
-go routine which will be dispatched to a thread and will be executed in parallel.
 
 ```Go
 	for {
@@ -106,3 +105,17 @@ go routine which will be dispatched to a thread and will be executed in parallel
 	        go processConnection(conn)
 	    }
 ```
+
+## What are go Goroutines ?
+
+They are very lightweight, not like OS threads, but rather hundreds of Goroutines can be multiplexed onto an OS Thread with a minimal overhead of context switching! In simple terms, goroutines are a lightweight and a cheap abstraction over threads.\
+
+Goroutines can be considered lightweight threads on top of an OS thread. The cost of creating a Goroutine is tiny when compared to a thread. Hence it's common for Go applications to have thousands of Goroutines running concurrently.
+
+There might be only one thread in a program with thousands of goroutines
+
+
+Creating a goroutine does not require much memory, only 2kB of stack space. They grow by allocating and freeing heap storage as required. In comparison, threads start at a much larger space, along with a region of memory called a guard page that acts as a guard between one thread's memory and another.
+
+Goroutines are easily created and destroyed at runtime, but threads have a large setup and teardown costs;
+
