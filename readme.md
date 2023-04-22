@@ -125,7 +125,7 @@ Goroutines are easily created and destroyed at runtime, but threads have a large
 Request A --> Fired at t : 15
 Request B --> Fired at t : 15
 
-Recived Response at Delta of 8 Second.
+Recived Response at Delta of 0 Second.
 Recived Response
 Response A <===  t : 23
 Response B <===  t : 23
